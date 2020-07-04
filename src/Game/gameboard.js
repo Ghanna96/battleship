@@ -1,3 +1,4 @@
+import Ship from './shipFactory';
 function createBoard() {
 	const board = [];
 	for (let i = 0; i < 10; i++) {
@@ -14,6 +15,7 @@ function Gameboard() {
 	const battlefield = createBoard();
 	const missedAttacks = [];
 	let ships = [];
+	const getShips = () => ships;
 	const getIndex = (x, y) =>
 		battlefield.findIndex((el) => el.X === x && el.Y === y);
 	const getBattlefield = () => battlefield;
@@ -42,12 +44,12 @@ function Gameboard() {
 				box.ship.hit();
 				return true;
 			} else {
-				return false;
+				return 0;
 			}
 		} else {
 			box.hit = true;
 			missedAttacks.push(box);
-			return 0;
+			return false;
 		}
 	};
 
@@ -56,6 +58,16 @@ function Gameboard() {
 
 		return sunk; // === shipCounter ? true : false;
 	};
+	const placeDefaultShips = () => {
+		let s1 = Ship(4, 's1'),
+			s2 = Ship(3, 's2'),
+			s3 = Ship(2, 's3'),
+			s4 = Ship(1, 's4');
+		placeShip(s1, ['A', 4]);
+		placeShip(s2, ['C', 6]);
+		placeShip(s3, ['A', 1]);
+		placeShip(s4, ['D', 4]);
+	};
 	return {
 		placeShip,
 		getBattlefield,
@@ -63,7 +75,8 @@ function Gameboard() {
 		getBox,
 		missed,
 		allShipsSunk,
-		ships,
+		placeDefaultShips,
+		getShips,
 	};
 }
 
