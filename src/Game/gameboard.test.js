@@ -2,7 +2,6 @@ import Gameboard from './gameboard';
 import Ship from './shipFactory';
 
 const g = Gameboard();
-const board = g.getBattlefield();
 const ship = Ship(4, 'x');
 const ship2 = Ship(2, 'z');
 it('return info about boxes', () => {

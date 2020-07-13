@@ -1,18 +1,16 @@
-function Player(board, id) {
+function Player(id) {
 	let moves = [];
-	let turn = true;
+	let turn = id === 'Player' ? true : false;
+
 	const getTurn = () => turn;
 	const play = () => {
 		turn = !turn;
 	};
-	const attack = (x, y) => {
-		if (turn) {
-			play();
-			let result = board.receiveAttack(x, y);
-			moves.push([x, y]);
-			return result;
-		}
-		return null;
+	const attack = (opponent, x, y) => {
+		play();
+		let result = opponent.receiveAttack(x, y);
+		moves.push([x, y]);
+		return result;
 	};
 	return { id, play, attack, getTurn };
 }

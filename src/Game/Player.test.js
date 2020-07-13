@@ -7,31 +7,39 @@ describe('player', () => {
 
 	gb1 = Gameboard();
 	gb2 = Gameboard();
-	player1 = Player(gb2, 'player1');
-	player2 = Player(gb1, 'computer');
-	player2.play();
+	player1 = Player('Player');
+	player2 = Player('Computer');
 	it('create player', () => {
-		expect(player1.id).toEqual('player1');
-		expect(player2.id).toEqual('computer');
+		expect(player1).toEqual(
+			expect.objectContaining({
+				id: expect.any(String),
+				play: expect.any(Function),
+				attack: expect.any(Function),
+				getTurn: expect.any(Function),
+			})
+		);
+
+		expect(player2.id).toEqual('Computer');
 	});
 
-	gb1.placeDefaultShips();
-	gb2.placeDefaultShips();
-	expect(gb1.getShips().length).toBe(4);
-	expect(gb2.getShips().length).toBe(4);
+	gb1.autoFill();
+	gb2.autoFill();
+	expect(gb1.getShips().length).toBe(5);
+	expect(gb2.getShips().length).toBe(5);
 
 	const whoMoves = () => {
 		if (player1.getTurn()) {
 			return player1;
 		} else return player2;
 	};
+
 	it('turns', () => {
 		expect(whoMoves()).toBe(player1);
 	});
 	it('attack', () => {
-		expect(player1.attack('A', 4)).toBeTruthy();
+		expect(player1.attack(gb1, 'A', 4)).toBeTruthy();
 		player1.play();
-		expect(player1.attack('A', 3)).toBeFalsy();
+		expect(player1.attack(gb1, 'A', 3)).toBeFalsy();
 	});
 });
 // placeShip(s1, ['A', 4]);

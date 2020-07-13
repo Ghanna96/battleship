@@ -1,4 +1,4 @@
-function Ship(length, id) {
+function Ship(length, id, vertical) {
 	let hp = length;
 
 	const hit = () => {
@@ -11,7 +11,7 @@ function Ship(length, id) {
 
 		return hp === 0 ? true : false;
 	};
-	return { length, hit, isSunk, id };
+	return { length, hit, isSunk, id, vertical };
 }
 
 export default Ship;

@@ -28,6 +28,7 @@ function Gameboard() {
 	//place ships only horizontaly for now
 	const placeShip = (ship, coord) => {
 		const [x, y] = coord;
+		ship.coord = coord;
 		let index = getIndex(x, y);
 		const length = ship.length;
 		for (let i = 0; i < length; i++, index++) {
@@ -58,15 +59,18 @@ function Gameboard() {
 
 		return sunk; // === shipCounter ? true : false;
 	};
-	const placeDefaultShips = () => {
-		let s1 = Ship(4, 's1'),
-			s2 = Ship(3, 's2'),
-			s3 = Ship(2, 's3'),
-			s4 = Ship(1, 's4');
+	const autoFill = () => {
+		let s1 = Ship(4, 's1', false),
+			s2 = Ship(3, 's2', true),
+			s3 = Ship(2, 's3', true),
+			s4 = Ship(1, 's4', false),
+			s5 = Ship(1, 's5', false);
+
 		placeShip(s1, ['A', 4]);
 		placeShip(s2, ['C', 6]);
 		placeShip(s3, ['A', 1]);
 		placeShip(s4, ['D', 4]);
+		placeShip(s5, ['H', 8]);
 	};
 	return {
 		placeShip,
@@ -75,7 +79,7 @@ function Gameboard() {
 		getBox,
 		missed,
 		allShipsSunk,
-		placeDefaultShips,
+		autoFill,
 		getShips,
 	};
 }
