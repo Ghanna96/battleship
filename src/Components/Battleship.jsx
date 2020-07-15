@@ -6,11 +6,14 @@ import Board from './Board';
 import CpuBoard from './CpuBoard';
 
 const Battelfields = styled.div`
+	width: 100%;
 	padding-top: 110px;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+
+	overflow: hidden;
 `;
 
 class Battleship extends Component {

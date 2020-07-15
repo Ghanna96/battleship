@@ -1,30 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import Ship from '../Game/shipFactory';
 import Box from './Box';
+import Marker from './Marker';
 
-// const Cell = styled.td`
-// 	border: 1px solid #b4b4ff;
-// 	padding: 0;
-// 	&:hover {
-// 	}
-// `;
-// const Content = styled.div`
-// 	position: relative;
-// 	height: 32px;
-// 	width: 32px;
-// 	background-color: ${(props) => (props.background ? '#ddd' : '#fff')};
-
-// 	&:hover {
-// 		border: 2px solid #40bf44;
-// 		background: rgba(64, 191, 68, 0.05);
-// 		width: 32px;
-// 		height: 32px;
-// 		margin: -2px;
-// 		cursor: crosshair;
-// 		z-index: 2;
-// 	}
-// `;
 const StyledDiv = styled.div`
 	float: right;
 	width: 50%;
@@ -64,10 +42,13 @@ export default function CpuBoard(props) {
 				<Box
 					key={[x, y]}
 					type={b.hit}
+					ship={b.ship}
 					onClick={() => {
 						attack(x, y, board);
 						console.log('dd');
-					}}></Box>
+					}}>
+					{Marker(x, y)}
+				</Box>
 			);
 		})
 		.reduce((row, el, i) => {
@@ -115,14 +96,62 @@ export default function CpuBoard(props) {
 //     margin-left: -2px;
 // }
 
-// .battlefield-cell__last .battlefield-cell-content:after, .battlefield-cell__processed .battlefield-cell-content:before {
+// hit ship
+
+//opacity
+// .body__with-pointerevents .battlefield__wait .battlefield-label, .body__with-pointerevents .battlefield__wait .battlefield-stat, .body__with-pointerevents .battlefield__wait .battlefield-table-placeholder {
+//     opacity: .4;
+//     pointer-events: none;
+// }
+
+// .ship-box {
+//     z-index: 2;
+//     left: 0;
+//     top: 0;
+//     border: 2px solid #00f;
+//     background: rgba(0,0,255,.05);
+//     position: absolute!important;
+//     margin: -2px;
+// }
+
+// .battlefield-cell__done .ship-box {
+//     border-color: red;
+//     background: rgba(255,0,0,.05);
+// }
+
+// .battlefield-cell__done .battlefield-cell-content:after {
 //     content: "";
 //     display: block;
 //     height: 2em;
 //     width: 2em;
+//     border: 1px solid red;
+//     margin: -1px;
 //     position: absolute;
-//     z-index: -1;
+//     z-index: 3;
 //     top: 0;
 //     left: 0;
-//     background-color: #fafad2;
+// }
+
+// element.style {
+//     width: 2em;
+//     height: 4em;
+//     padding-right: 0px;
+//     padding-bottom: 1px;
+// }
+// .battlefield-cell__done .ship-box {
+//     border-color: red;
+//     background: rgba(255,0,0,.05);
+// }
+
+// .battlefield-cell__done .battlefield-cell-content:after {
+//     content: "";
+//     display: block;
+//     height: 2em;
+//     width: 2em;
+//     border: 1px solid red;
+//     margin: -1px;
+//     position: absolute;
+//     z-index: 3;
+//     top: 0;
+//     left: 0;
 // }

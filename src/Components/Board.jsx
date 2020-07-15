@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Ship from '../Game/shipFactory';
 import ShipC from './Ship';
+import Marker from './Marker';
 const Cell = styled.td`
 	border: 1px solid #b4b4ff;
 	padding: 0;
@@ -13,9 +14,9 @@ const Content = styled.div`
 	background-color: ${(props) => (props.background ? '#eee' : '#fff')};
 `;
 const StyledDiv = styled.div`
+	position: relative;
 	float: left;
 	width: 50%;
-	position: relative;
 `;
 const Row = styled.tr`
 	margin: 0;
@@ -27,7 +28,7 @@ const Row = styled.tr`
 `;
 
 const Table = styled.table`
-	margin: 0;
+	margin-left: 50px;
 	border-collapse: collapse;
 	cursor: default;
 	display: inline-block;
@@ -71,6 +72,7 @@ export default function Board(props) {
 				<Cell key={i}>
 					<Content key={i} data-coord={[x, y]} background={b.hit}>
 						{placeShipsOnBoard(x, y)}
+						{Marker(x, y)}
 					</Content>
 				</Cell>
 			);
