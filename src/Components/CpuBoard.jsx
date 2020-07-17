@@ -32,7 +32,7 @@ export default function CpuBoard(props) {
 
 	const ships = board.getShips();
 
-	console.log(ships);
+	// console.log(ships);
 
 	const rows = field
 		.map((b, i) => {
@@ -45,7 +45,6 @@ export default function CpuBoard(props) {
 					ship={b.ship}
 					onClick={() => {
 						attack(x, y, board);
-						console.log('dd');
 					}}>
 					{Marker(x, y)}
 				</Box>

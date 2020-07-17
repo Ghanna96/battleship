@@ -14,6 +14,14 @@ function createBoard() {
 function Gameboard() {
 	const battlefield = createBoard();
 	const missedAttacks = [];
+	const availableMoves = () =>
+		battlefield
+			.filter((b) => !b.hit)
+			.reduce((arr, b) => {
+				arr.push([b.X, b.Y]);
+				return arr;
+			}, []);
+
 	let ships = [];
 	const getShips = () => ships;
 	const getIndex = (x, y) =>
@@ -39,18 +47,18 @@ function Gameboard() {
 
 	const receiveAttack = (x, y) => {
 		const box = getBox(x, y);
+		if (box.hit) {
+			return null;
+		}
+
 		if (box.hasOwnProperty('ship')) {
-			if (!box.hit) {
-				box.hit = true;
-				box.ship.hit();
-				return true;
-			} else {
-				return 0;
-			}
+			box.hit = true;
+			box.ship.hit();
+			return true;
 		} else {
 			box.hit = true;
 			missedAttacks.push(box);
-			return false;
+			return 1;
 		}
 	};
 
@@ -73,6 +81,7 @@ function Gameboard() {
 		placeShip(s5, ['H', 8]);
 	};
 	return {
+		availableMoves,
 		placeShip,
 		getBattlefield,
 		receiveAttack,

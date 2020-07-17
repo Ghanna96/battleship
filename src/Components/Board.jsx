@@ -42,7 +42,7 @@ export default function Board(props) {
 
 	const ships = board.getShips();
 
-	console.log(field);
+	// console.log(field);
 
 	const buildShip = (length, id, vertical) => {
 		const ship = Ship(length, id, vertical);

@@ -27,8 +27,9 @@ it('place ship 2', () => {
 it('receive attack 1', () => {
 	expect(g.receiveAttack('A', 2)).toBeTruthy();
 	expect(g.receiveAttack('A', 3)).toBeTruthy();
+	expect(g.receiveAttack('A', 4)).toBeTruthy();
 	expect(g.receiveAttack('A', 4)).toBeFalsy();
-	expect(g.receiveAttack('B', 8)).toBeFalsy();
+	expect(g.receiveAttack('A', 8)).toBeTruthy();
 });
 it('check missed attacks 1', () => {
 	expect(g.missed().length).toBe(2);
@@ -39,7 +40,8 @@ it('receive attack 2', () => {
 	expect(g.receiveAttack('B', 3)).toBeTruthy();
 	expect(g.receiveAttack('B', 4)).toBeTruthy();
 	expect(g.receiveAttack('B', 5)).toBeTruthy();
-	expect(g.receiveAttack('B', 8)).toBeFalsy();
+	expect(g.receiveAttack('B', 8)).toBeTruthy();
+	expect(g.receiveAttack('B', 2)).toBeFalsy();
 });
 
 it('check missed attacks 2', () => {
@@ -47,7 +49,10 @@ it('check missed attacks 2', () => {
 });
 it('all ships are sunk', () => {
 	expect(g.allShipsSunk()).toBeTruthy();
+	console.log(g.availableMoves().length);
 });
+
+// it('check valid move');
 
 // g.receiveAttack('B', 2);
 // g.receiveAttack('B', 3);

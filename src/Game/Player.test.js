@@ -27,20 +27,18 @@ describe('player', () => {
 	expect(gb1.getShips().length).toBe(5);
 	expect(gb2.getShips().length).toBe(5);
 
-	const whoMoves = () => {
-		if (player1.getTurn()) {
-			return player1;
-		} else return player2;
-	};
+	it('random move', () => {
+		const move = player2.randomAttack(gb1);
+		expect(move).toBeTruthy();
+	});
 
-	it('turns', () => {
-		expect(whoMoves()).toBe(player1);
-	});
-	it('attack', () => {
-		expect(player1.attack(gb1, 'A', 4)).toBeTruthy();
-		player1.play();
-		expect(player1.attack(gb1, 'A', 3)).toBeFalsy();
-	});
+	// it('attack', () => {
+	// 	expect(player1.attack(gb1, 'A', 4)).toBeTruthy();
+	// 	// player1.play();
+	// 	expect(player1.attack(gb1, 'A', 3)).toBeTruthy();
+	// 	expect(player1.attack(gb1, 'A', 3)).toBeFalsy();
+	// 	expect(player1.attack(gb1, 'A', 3)).toBeFalsy();
+	// });
 });
 // placeShip(s1, ['A', 4]);
 // 	placeShip(s2, ['C', 6]);

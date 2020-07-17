@@ -22,12 +22,37 @@ class Battleship extends Component {
 		cBoard: Gameboard(),
 		player: Player('player'),
 		computer: Player('computer'),
+		playerTurn: true,
 	};
+
 	attackBoard = (x, y, board) => {
-		let bf = Object.assign({}, board);
-		this.state.player.attack(bf, x, y);
-		this.setState({ cBoard: bf });
-		console.log(bf.getBox(x, y));
+		let turn = this.state.playerTurn;
+		let player = this.state.player;
+		if (turn) {
+			let bf = Object.assign({}, board);
+			if (player.attack(bf, x, y) === true) {
+				this.setState({ cBoard: bf });
+				return;
+			}
+			this.setState({ cBoard: bf });
+			this.setState({ playerTurn: !turn });
+			this.computerAttacks();
+			console.log(bf.getBox(x, y));
+		} else return;
+	};
+	computerAttacks = () => {
+		setTimeout(() => {
+			console.log('computer attack');
+			let bf = Object.assign({}, this.state.pBoard);
+			let computer = this.state.computer;
+			if (computer.randomAttack(bf) === true) {
+				this.setState({ pBoard: bf });
+				this.computerAttacks();
+			} else {
+				this.setState({ pBoard: bf });
+				this.setState({ playerTurn: true });
+			}
+		}, 1500);
 	};
 	componentWillMount() {
 		console.log('use effect');
@@ -38,6 +63,7 @@ class Battleship extends Component {
 		this.setState({ pBoard: p });
 		this.setState({ cBoard: c });
 	}
+
 	render() {
 		return (
 			<Battelfields>
