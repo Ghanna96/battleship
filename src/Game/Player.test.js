@@ -13,19 +13,19 @@ describe('player', () => {
 		expect(player1).toEqual(
 			expect.objectContaining({
 				id: expect.any(String),
-				play: expect.any(Function),
 				attack: expect.any(Function),
-				getTurn: expect.any(Function),
+				randomAttack: expect.any(Function),
 			})
 		);
 
 		expect(player2.id).toEqual('Computer');
 	});
-
-	gb1.autoFill();
-	gb2.autoFill();
-	expect(gb1.getShips().length).toBe(5);
-	expect(gb2.getShips().length).toBe(5);
+	it('place ships', () => {
+		gb1.autoFill();
+		gb2.autoFill();
+		expect(gb1.getShips().length).toBe(5);
+		expect(gb2.getShips().length).toBe(5);
+	});
 
 	it('random move', () => {
 		const move = player2.randomAttack(gb1);

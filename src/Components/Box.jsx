@@ -90,7 +90,7 @@ const StyledTd = styled.td`
 `;
 
 export default function Box(props) {
-	const { type, onClick, ship, children } = props;
+	const { player, type, onClick, ship, children } = props;
 	const renderBox = (type) => {
 		if (type === true) {
 			if (ship) {
@@ -110,8 +110,11 @@ export default function Box(props) {
 				);
 			}
 			return <StyledHitBox>{children}</StyledHitBox>;
-		} else return <StyledBox onClick={onClick}>{children}</StyledBox>;
+		} else if (player === 'computer')
+			return <StyledBox onClick={onClick}>{children}</StyledBox>;
+		else return <StyledDiv>{children}</StyledDiv>;
 	};
 
 	return <StyledTd>{renderBox(type)}</StyledTd>;
 }
+// if (player === 'computer')

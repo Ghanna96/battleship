@@ -52,7 +52,7 @@ class Battleship extends Component {
 				this.setState({ pBoard: bf });
 				this.setState({ playerTurn: true });
 			}
-		}, 1500);
+		}, 1250);
 	};
 	componentWillMount() {
 		console.log('use effect');

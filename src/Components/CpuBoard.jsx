@@ -40,9 +40,10 @@ export default function CpuBoard(props) {
 
 			return (
 				<Box
-					key={[x, y]}
+					key={'cBoard' + [x, y]}
 					type={b.hit}
 					ship={b.ship}
+					player={'computer'}
 					onClick={() => {
 						attack(x, y, board);
 					}}>

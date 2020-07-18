@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Ship from '../Game/shipFactory';
 import ShipC from './Ship';
 import Marker from './Marker';
+import Box from './Box';
+
 const Cell = styled.td`
 	border: 1px solid #b4b4ff;
 	padding: 0;
@@ -69,12 +71,14 @@ export default function Board(props) {
 			const [x, y] = [b.X, b.Y];
 
 			return (
-				<Cell key={i}>
-					<Content key={i} data-coord={[x, y]} background={b.hit}>
-						{placeShipsOnBoard(x, y)}
-						{Marker(x, y)}
-					</Content>
-				</Cell>
+				<Box
+					key={'pBoard' + [x, y]}
+					type={b.hit}
+					ship={b.ship}
+					player={'player'}>
+					{placeShipsOnBoard(x, y)}
+					{Marker(x, y)}
+				</Box>
 			);
 		})
 		.reduce((row, el, i) => {

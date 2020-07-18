@@ -34,9 +34,27 @@ function Gameboard() {
 		return box[i];
 	};
 	//place ships only horizontaly for now
+
 	const placeShip = (ship, coord) => {
 		const [x, y] = coord;
 		ship.coord = coord;
+		if (ship.vertical) {
+			//place ship vertically
+			let c = x.charCodeAt(0);
+			let length = ship.length;
+			let box;
+			console.log(c);
+			for (let i = 0; i < length; i++) {
+				c += i;
+				let char = String.fromCharCode(c);
+				box = getBox(char, y);
+				box.ship = ship;
+				console.log(box);
+			}
+			ships.push(ship);
+			return;
+		}
+		//place ship horizontally
 		let index = getIndex(x, y);
 		const length = ship.length;
 		for (let i = 0; i < length; i++, index++) {
