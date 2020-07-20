@@ -4,6 +4,8 @@ import Ship from '../Game/shipFactory';
 import ShipC from './Ship';
 import Marker from './Marker';
 import Box from './Box';
+import { useDrop } from 'react-dnd';
+import itemTypes from '../utils/items';
 
 const Cell = styled.td`
 	border: 1px solid #b4b4ff;
@@ -19,6 +21,8 @@ const StyledDiv = styled.div`
 	position: relative;
 	float: left;
 	width: 50%;
+	opacity: ${(props) => (props.gameOver ? 0.4 : 1)};
+	pointer-events: ${(props) => (props.gameOver ? 'none' : 'auto')};
 `;
 const Row = styled.tr`
 	margin: 0;
@@ -38,12 +42,20 @@ const Table = styled.table`
 `;
 
 export default function Board(props) {
-	const { board } = props;
+	const { board, gameOver } = props;
 	// gb.autoFill();
 	const field = board.getBattlefield();
 
 	const ships = board.getShips();
-
+	const [{ isOver }, drop] = useDrop({
+		accept: itemTypes.SHIP,
+		drop: (item, monitor) => {
+			//what to do when item is drop
+		},
+		collect: (monitor) => ({
+			isOver: monitor.isOver(),
+		}),
+	});
 	// console.log(field);
 
 	const buildShip = (length, id, vertical) => {
@@ -59,7 +71,6 @@ export default function Board(props) {
 	};
 	const placeShip = (ship, x, y) => {
 		if (ship.coord[0] === x && ship.coord[1] === y) {
-			console.log('ship');
 			return buildShip(ship.length, ship.id, ship.vertical);
 		} else return;
 	};
@@ -73,7 +84,7 @@ export default function Board(props) {
 			return (
 				<Box
 					key={'pBoard' + [x, y]}
-					type={b.hit}
+					onHit={b.hit}
 					ship={b.ship}
 					player={'player'}>
 					{placeShipsOnBoard(x, y)}
@@ -91,8 +102,8 @@ export default function Board(props) {
 		});
 
 	return (
-		<StyledDiv>
-			<Table>
+		<StyledDiv gameOver={gameOver}>
+			<Table ref={drop}>
 				<tbody>{rows}</tbody>
 			</Table>
 		</StyledDiv>

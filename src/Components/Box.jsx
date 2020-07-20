@@ -90,31 +90,74 @@ const StyledTd = styled.td`
 `;
 
 export default function Box(props) {
-	const { player, type, onClick, ship, children } = props;
-	const renderBox = (type) => {
-		if (type === true) {
-			if (ship) {
-				if (ship.isSunk()) {
+	const { player, onHit, onClick, ship, children } = props;
+	const renderBox = () => {
+		if (player === 'computer') {
+			if (onHit) {
+				if (ship) {
+					if (ship.isSunk()) {
+						return (
+							<SunkShip>
+								<HitShip></HitShip>
+								{children}
+							</SunkShip>
+						);
+					}
+
 					return (
-						<SunkShip>
+						<StyledBox>
 							<HitShip></HitShip>
 							{children}
-						</SunkShip>
+						</StyledBox>
 					);
-				}
-				return (
-					<StyledBox>
-						<HitShip></HitShip>
-						{children}
-					</StyledBox>
-				);
-			}
-			return <StyledHitBox>{children}</StyledHitBox>;
-		} else if (player === 'computer')
-			return <StyledBox onClick={onClick}>{children}</StyledBox>;
-		else return <StyledDiv>{children}</StyledDiv>;
+				} else return <StyledHitBox>{children}</StyledHitBox>; //empty cell
+			} else return <StyledBox onClick={onClick}>{children}</StyledBox>; //standard cell
+		}
+		//player cells
+		else if (player === 'player') {
+			if (onHit) {
+				if (ship) {
+					if (ship.isSunk()) {
+						return (
+							<SunkShip>
+								<HitShip></HitShip>
+								{children}
+							</SunkShip>
+						);
+					}
+					return (
+						<StyledBox>
+							<HitShip></HitShip>
+							{children}
+						</StyledBox>
+					);
+				} else return <StyledHitBox>{children}</StyledHitBox>; //empty hit cell
+			} else return <StyledDiv>{children}</StyledDiv>;
+		}
+
+		// if (type === true) {
+		// 	if (ship) {
+		// 		if (ship.isSunk()) {
+		// 			return (
+		// 				<SunkShip>
+		// 					<HitShip></HitShip>
+		// 					{children}
+		// 				</SunkShip>
+		// 			);
+		// 		}
+		// 		return (
+		// 			<StyledBox>
+		// 				<HitShip></HitShip>
+		// 				{children}
+		// 			</StyledBox>
+		// 		);
+		// 	}
+		// 	return <StyledHitBox>{children}</StyledHitBox>;
+		// } else if (player === 'computer')
+		// 	return <StyledBox onClick={onClick}>{children}</StyledBox>;
+		// else return <StyledDiv>{children}</StyledDiv>;
 	};
 
-	return <StyledTd>{renderBox(type)}</StyledTd>;
+	return <StyledTd>{renderBox()}</StyledTd>;
 }
 // if (player === 'computer')

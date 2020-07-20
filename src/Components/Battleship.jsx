@@ -23,19 +23,26 @@ class Battleship extends Component {
 		player: Player('player'),
 		computer: Player('computer'),
 		playerTurn: true,
+		turn: false,
+		gameOver: false,
 	};
 
 	attackBoard = (x, y, board) => {
+		if (this.gameOver()) {
+			return;
+		}
 		let turn = this.state.playerTurn;
 		let player = this.state.player;
 		if (turn) {
-			let bf = Object.assign({}, board);
+			let bf = Object.assign({}, board); // DA CAMBIARE
 			if (player.attack(bf, x, y) === true) {
 				this.setState({ cBoard: bf });
 				return;
 			}
 			this.setState({ cBoard: bf });
 			this.setState({ playerTurn: !turn });
+			this.setState({ turn: true });
+
 			this.computerAttacks();
 			console.log(bf.getBox(x, y));
 		} else return;
@@ -43,6 +50,9 @@ class Battleship extends Component {
 	computerAttacks = () => {
 		setTimeout(() => {
 			console.log('computer attack');
+			if (this.gameOver()) {
+				return;
+			}
 			let bf = Object.assign({}, this.state.pBoard);
 			let computer = this.state.computer;
 			if (computer.randomAttack(bf) === true) {
@@ -52,6 +62,7 @@ class Battleship extends Component {
 				this.setState({ pBoard: bf });
 				this.setState({ playerTurn: true });
 			}
+			this.setState({ turn: false });
 		}, 1250);
 	};
 	componentWillMount() {
@@ -63,14 +74,24 @@ class Battleship extends Component {
 		this.setState({ pBoard: p });
 		this.setState({ cBoard: c });
 	}
+	gameOver() {
+		const go1 = this.state.pBoard;
+		const go2 = this.state.cBoard;
+		if (go1.allShipsSunk() || go2.allShipsSunk()) {
+			this.setState({ gameOver: true });
+			return true;
+		}
+	}
 
 	render() {
 		return (
 			<Battelfields>
-				<Board board={this.state.pBoard}></Board>
+				<Board board={this.state.pBoard} gameOver={this.state.gameOver}></Board>
 				<CpuBoard
 					board={this.state.cBoard}
-					attack={this.attackBoard}></CpuBoard>
+					attack={this.attackBoard}
+					turn={this.state.turn}
+					gameOver={this.state.gameOver}></CpuBoard>
 			</Battelfields>
 		);
 	}

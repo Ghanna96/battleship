@@ -7,6 +7,9 @@ const StyledDiv = styled.div`
 	float: right;
 	width: 50%;
 	position: relative;
+	opacity: ${(props) => (props.disable || props.gameOver ? 0.4 : 1)};
+	pointer-events: ${(props) =>
+		props.disable || props.gameOver ? 'none' : 'auto'};
 `;
 const Row = styled.tr`
 	margin: 0;
@@ -26,14 +29,11 @@ const Table = styled.table`
 `;
 
 export default function CpuBoard(props) {
-	const { board, attack } = props;
-	// gb.autoFill();
+	const { board, attack, disable, gameOver } = props;
+
 	const field = board.getBattlefield();
 
 	const ships = board.getShips();
-
-	// console.log(ships);
-
 	const rows = field
 		.map((b, i) => {
 			const [x, y] = [b.X, b.Y];
@@ -41,7 +41,7 @@ export default function CpuBoard(props) {
 			return (
 				<Box
 					key={'cBoard' + [x, y]}
-					type={b.hit}
+					onHit={b.hit}
 					ship={b.ship}
 					player={'computer'}
 					onClick={() => {
@@ -61,7 +61,7 @@ export default function CpuBoard(props) {
 		});
 
 	return (
-		<StyledDiv>
+		<StyledDiv disable={disable} gameOver={gameOver}>
 			<Table>
 				<tbody>{rows}</tbody>
 			</Table>

@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDrag } from 'react-dnd';
+import ItemTypes from '../utils/items';
 const horizontal = (props) => {
 	if (!props.vertical) {
 		return `${props.length * 32 + props.length - 1}px`;
@@ -26,7 +28,19 @@ const StyledShip = styled.div`
 `;
 
 export default function ShipC(props) {
+	const [{ isDragging }, drag] = useDrag({
+		item: {
+			//add props to drag with
+			type: ItemTypes.SHIP,
+		},
+		collect: (monitor) => ({
+			isDragging: monitor.isDragging(),
+		}),
+	});
 	return (
-		<StyledShip length={props.length} vertical={props.vertical}></StyledShip>
+		<StyledShip
+			ref={drag}
+			length={props.length}
+			vertical={props.vertical}></StyledShip>
 	);
 }

@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import Battleship from './Components/Battleship';
 
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 const Wrapper = styled.div`
 	min-width: 990px;
 	max-width: 1080px;
@@ -14,9 +17,11 @@ const Wrapper = styled.div`
 
 function App() {
 	return (
-		<Wrapper>
-			<Battleship></Battleship>
-		</Wrapper>
+		<DndProvider backend={HTML5Backend}>
+			<Wrapper>
+				<Battleship></Battleship>
+			</Wrapper>
+		</DndProvider>
 	);
 }
 

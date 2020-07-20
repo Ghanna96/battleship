@@ -28,28 +28,30 @@ function Gameboard() {
 		battlefield.findIndex((el) => el.X === x && el.Y === y);
 	const getBattlefield = () => battlefield;
 	const missed = () => missedAttacks;
-	const getBox = (x, y) => {
-		const i = getIndex(x, y);
-		const box = getBattlefield();
-		return box[i];
-	};
+	const getBox = (x, y) => battlefield.find((o) => o.X === x && o.Y === y);
+	// const getBox = (x, y) => {
+	// 	const i = getIndex(x, y);
+	// 	const box = getBattlefield();
+	// 	return box[i];
+	// };
 	//place ships only horizontaly for now
 
 	const placeShip = (ship, coord) => {
 		const [x, y] = coord;
 		ship.coord = coord;
 		if (ship.vertical) {
+			console.log(ship.id);
 			//place ship vertically
 			let c = x.charCodeAt(0);
 			let length = ship.length;
 			let box;
-			console.log(c);
+
 			for (let i = 0; i < length; i++) {
-				c += i;
 				let char = String.fromCharCode(c);
+				c++;
 				box = getBox(char, y);
 				box.ship = ship;
-				console.log(box);
+				console.log(char, y);
 			}
 			ships.push(ship);
 			return;
@@ -87,8 +89,8 @@ function Gameboard() {
 	};
 	const autoFill = () => {
 		let s1 = Ship(4, 's1', false),
-			s2 = Ship(3, 's2', true),
-			s3 = Ship(2, 's3', true),
+			s2 = Ship(2, 's2', true),
+			s3 = Ship(4, 's3', true),
 			s4 = Ship(1, 's4', false),
 			s5 = Ship(1, 's5', false);
 
