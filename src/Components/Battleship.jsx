@@ -40,6 +40,7 @@ class Battleship extends Component {
 				return;
 			}
 			this.setState({ cBoard: bf });
+
 			this.setState({ playerTurn: !turn });
 			this.setState({ turn: true });
 

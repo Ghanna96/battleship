@@ -2,25 +2,26 @@ import Gameboard from './gameboard';
 import Ship from './shipFactory';
 
 const g = Gameboard();
-const ship = Ship(4, 'x');
-const ship2 = Ship(2, 'z');
+const ship = Ship(4, 'x', ['B', 2]);
+const ship2 = Ship(2, 'z', ['A', 2]);
 it('return info about boxes', () => {
 	//
 	expect(g.getBox('D', 3)).toEqual({
 		X: 'D',
 		Y: 3,
-
+		ship: null,
 		hit: false,
 	});
 });
 
 it('place ship', () => {
-	g.placeShip(ship, ['B', 2]);
-
+	g.addShip(ship);
+	g.placeShips();
 	expect(g.getBox('B', 4).ship).toEqual(ship);
 });
 it('place ship 2', () => {
-	g.placeShip(ship2, ['A', 2]);
+	g.addShip(ship2);
+	g.placeShips();
 	expect(g.getBox('A', 3).ship).toEqual(ship2);
 });
 
