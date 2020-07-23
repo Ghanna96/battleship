@@ -25,6 +25,7 @@ class Battleship extends Component {
 		playerTurn: true,
 		turn: false,
 		gameOver: false,
+		temp: null,
 	};
 
 	attackBoard = (x, y, board) => {
@@ -64,7 +65,7 @@ class Battleship extends Component {
 				this.setState({ playerTurn: true });
 			}
 			this.setState({ turn: false });
-		}, 1250);
+		}, 1000);
 	};
 	componentWillMount() {
 		console.log('use effect');
@@ -75,6 +76,24 @@ class Battleship extends Component {
 		this.setState({ pBoard: p });
 		this.setState({ cBoard: c });
 	}
+	shipClick = (s) => {
+		this.setState({ temp: s });
+		console.log(s);
+	};
+	handleShip = (x, y) => {
+		const board = Object.assign({}, this.state.pBoard);
+		board.moveShip(this.state.temp, x, y);
+		this.setState({ pBoard: board });
+	};
+	moveShip = (s, x, y) => {
+		const board = Object.assign({}, this.state.pBoard);
+		board.moveShip(s, x, y);
+		console.log(board.getBox(x, y));
+		this.setState({ pBoard: board });
+	};
+	canMoveShip = (ship, x, y) => {
+		const board = Object.assign({}, this.state.pBoard);
+	};
 	gameOver() {
 		const go1 = this.state.pBoard;
 		const go2 = this.state.cBoard;
@@ -85,9 +104,14 @@ class Battleship extends Component {
 	}
 
 	render() {
+		console.log('render');
 		return (
 			<Battelfields>
-				<Board board={this.state.pBoard} gameOver={this.state.gameOver}></Board>
+				<Board
+					board={this.state.pBoard}
+					gameOver={this.state.gameOver}
+					shipClick={this.shipClick}
+					moveShip={this.moveShip}></Board>
 				<CpuBoard
 					board={this.state.cBoard}
 					attack={this.attackBoard}

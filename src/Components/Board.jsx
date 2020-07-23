@@ -1,22 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import Ship from '../Game/shipFactory';
 import ShipC from './Ship';
 import Marker from './Marker';
 import Box from './Box';
 import { useDrop } from 'react-dnd';
 import itemTypes from '../utils/items';
+import Ship from '../Game/shipFactory';
 
-const Cell = styled.td`
-	border: 1px solid #b4b4ff;
-	padding: 0;
-`;
-const Content = styled.div`
-	position: relative;
-	height: 32px;
-	width: 32px;
-	background-color: ${(props) => (props.background ? '#eee' : '#fff')};
-`;
 const StyledDiv = styled.div`
 	position: relative;
 	float: left;
@@ -42,55 +32,59 @@ const Table = styled.table`
 `;
 
 export default function Board(props) {
-	const { board, gameOver } = props;
+	const { board, gameOver, shipClick, moveShip } = props;
 	// gb.autoFill();
 	const field = board.getBattlefield();
 
 	const ships = board.getShips();
-	const [{ isOver }, drop] = useDrop({
-		accept: itemTypes.SHIP,
-		drop: (item, monitor) => {
-			//what to do when item is drop
-		},
-		collect: (monitor) => ({
-			isOver: monitor.isOver(),
-		}),
-	});
-	// console.log(field);
+	// const [{ isOver, x, y }, drop] = useDrop({
+	// 	accept: itemTypes.SHIP,
+	// 	drop: (item, monitor) => {
+	// 		console.log(item, x, y);
+	// 		// moveShip(item,)
+	// 		//what to do when item is drop
+	// 	},
+	// 	collect: (monitor) => ({
+	// 		isOver: !!monitor.isOver(),
+	// 	}),
+	// });
 
-	const buildShip = (length, id, vertical) => {
-		const ship = Ship(length, id, vertical);
+	const renderShip = (x, y) => {
+		let ship = ships.find((s) => s.coords[0] === x && s.coords[1] === y);
+		if (ship) {
+			return (
+				<ShipC
+					key={ship.id}
+					ship={ship}
+					onClick={shipClick}
+					length={ship.length}
+					id={ship.id}
+					vertical={ship.vertical}
+				/>
+			);
+		} else return null;
+	};
+	const renderBox = (box) => {
+		const [x, y] = [box.X, box.Y];
+
 		return (
-			<ShipC
-				key={ship.id}
-				length={ship.length}
-				id={ship.id}
-				vertical={ship.vertical}
-			/>
+			<Box
+				moveShip={moveShip}
+				key={'pBoard' + [x, y]}
+				x={x}
+				y={y}
+				onHit={box.hit}
+				ship={box.ship}
+				player={'player'}>
+				{renderShip(x, y)}
+				{Marker(x, y)}
+			</Box>
 		);
 	};
-	const placeShip = (ship, x, y) => {
-		if (ship.coord[0] === x && ship.coord[1] === y) {
-			return buildShip(ship.length, ship.id, ship.vertical);
-		} else return;
-	};
-	const placeShipsOnBoard = (x, y) => {
-		return ships.map((s) => placeShip(s, x, y));
-	};
-	const rows = field
-		.map((b, i) => {
-			const [x, y] = [b.X, b.Y];
 
-			return (
-				<Box
-					key={'pBoard' + [x, y]}
-					onHit={b.hit}
-					ship={b.ship}
-					player={'player'}>
-					{placeShipsOnBoard(x, y)}
-					{Marker(x, y)}
-				</Box>
-			);
+	const rows = field
+		.map((b) => {
+			return renderBox(b);
 		})
 		.reduce((row, el, i) => {
 			i % 10 === 0 && row.push([]);
@@ -103,7 +97,7 @@ export default function Board(props) {
 
 	return (
 		<StyledDiv gameOver={gameOver}>
-			<Table ref={drop}>
+			<Table>
 				<tbody>{rows}</tbody>
 			</Table>
 		</StyledDiv>

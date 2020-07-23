@@ -7,9 +7,9 @@ const StyledDiv = styled.div`
 	float: right;
 	width: 50%;
 	position: relative;
-	opacity: ${(props) => (props.disable || props.gameOver ? 0.4 : 1)};
+	opacity: ${(props) => (props.turn || props.gameOver ? 0.4 : 1)};
 	pointer-events: ${(props) =>
-		props.disable || props.gameOver ? 'none' : 'auto'};
+		props.turn || props.gameOver ? 'none' : 'auto'};
 `;
 const Row = styled.tr`
 	margin: 0;
@@ -29,7 +29,7 @@ const Table = styled.table`
 `;
 
 export default function CpuBoard(props) {
-	const { board, attack, disable, gameOver } = props;
+	const { board, attack, turn, gameOver } = props;
 
 	const field = board.getBattlefield();
 
@@ -61,7 +61,7 @@ export default function CpuBoard(props) {
 		});
 
 	return (
-		<StyledDiv disable={disable} gameOver={gameOver}>
+		<StyledDiv turn={turn} gameOver={gameOver}>
 			<Table>
 				<tbody>{rows}</tbody>
 			</Table>

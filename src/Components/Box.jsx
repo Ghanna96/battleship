@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+
+import { useDrop } from 'react-dnd';
+import itemTypes from '../utils/items';
 const StyledDiv = styled.div`
 	position: relative;
 	height: 32px;
@@ -90,7 +93,18 @@ const StyledTd = styled.td`
 `;
 
 export default function Box(props) {
-	const { player, onHit, onClick, ship, children } = props;
+	const { player, onHit, onClick, ship, children, moveShip, x, y } = props;
+	const [{ isOver }, drop] = useDrop({
+		accept: itemTypes.SHIP,
+		drop: (item, monitor) => {
+			console.log(item, x, y);
+			moveShip(item.ship, x, y);
+			//what to do when item is drop
+		},
+		collect: (monitor) => ({
+			isOver: !!monitor.isOver(),
+		}),
+	});
 	const renderBox = () => {
 		if (player === 'computer') {
 			if (onHit) {
@@ -132,30 +146,8 @@ export default function Box(props) {
 						</StyledBox>
 					);
 				} else return <StyledHitBox>{children}</StyledHitBox>; //empty hit cell
-			} else return <StyledDiv>{children}</StyledDiv>;
+			} else return <StyledDiv ref={drop}>{children}</StyledDiv>; //standard cell
 		}
-
-		// if (type === true) {
-		// 	if (ship) {
-		// 		if (ship.isSunk()) {
-		// 			return (
-		// 				<SunkShip>
-		// 					<HitShip></HitShip>
-		// 					{children}
-		// 				</SunkShip>
-		// 			);
-		// 		}
-		// 		return (
-		// 			<StyledBox>
-		// 				<HitShip></HitShip>
-		// 				{children}
-		// 			</StyledBox>
-		// 		);
-		// 	}
-		// 	return <StyledHitBox>{children}</StyledHitBox>;
-		// } else if (player === 'computer')
-		// 	return <StyledBox onClick={onClick}>{children}</StyledBox>;
-		// else return <StyledDiv>{children}</StyledDiv>;
 	};
 
 	return <StyledTd>{renderBox()}</StyledTd>;

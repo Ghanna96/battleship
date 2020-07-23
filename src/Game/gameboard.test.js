@@ -11,6 +11,7 @@ it('return info about boxes', () => {
 		Y: 3,
 		ship: null,
 		hit: false,
+		index: [3, 2],
 	});
 });
 
@@ -18,8 +19,11 @@ it('place ship', () => {
 	g.addShip(ship);
 	g.placeShips();
 	expect(g.getBox('B', 4).ship).toEqual(ship);
+	expect(g.canPlaceShip(ship, 'B', 3)).toBeFalsy();
 });
+
 it('place ship 2', () => {
+	expect(g.canPlaceShip(ship2, 'A', 3)).toBeTruthy();
 	g.addShip(ship2);
 	g.placeShips();
 	expect(g.getBox('A', 3).ship).toEqual(ship2);
@@ -52,7 +56,10 @@ it('all ships are sunk', () => {
 	expect(g.allShipsSunk()).toBeTruthy();
 	console.log(g.availableMoves().length);
 });
-
+it('move ship', () => {
+	g.moveShip(ship, 'H', 5);
+	expect(g.getBox('H', 5).ship).toEqual(ship);
+});
 // it('check valid move');
 
 // g.receiveAttack('B', 2);

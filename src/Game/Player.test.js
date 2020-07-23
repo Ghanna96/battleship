@@ -28,6 +28,7 @@ describe('player', () => {
 			Y: 1,
 			hit: false,
 			ship: expect.any(Object),
+			index: [2, 0],
 		});
 		expect(gb1.getShips().length).toBe(5);
 		expect(gb2.getShips().length).toBe(5);

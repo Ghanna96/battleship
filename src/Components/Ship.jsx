@@ -28,18 +28,24 @@ const StyledShip = styled.div`
 `;
 
 export default function ShipC(props) {
+	const { ship } = props;
 	const [{ isDragging }, drag] = useDrag({
 		item: {
 			//add props to drag with
+			ship,
+
 			type: ItemTypes.SHIP,
 		},
 		collect: (monitor) => ({
-			isDragging: monitor.isDragging(),
+			isDragging: !!monitor.isDragging(),
 		}),
 	});
 	return (
 		<StyledShip
 			ref={drag}
+			onClick={() => {
+				props.onClick(props.ship);
+			}}
 			length={props.length}
 			vertical={props.vertical}></StyledShip>
 	);
