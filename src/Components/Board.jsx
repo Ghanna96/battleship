@@ -69,6 +69,7 @@ export default function Board(props) {
 
 		return (
 			<Box
+				canPlace={board.canPlaceShip}
 				moveShip={moveShip}
 				key={'pBoard' + [x, y]}
 				x={x}

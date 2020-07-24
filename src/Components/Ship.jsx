@@ -18,7 +18,7 @@ const StyledShip = styled.div`
 	height: ${vertical};
 	padding-right: 1px;
 	padding-bottom: 0px;
-	z-index: 2;
+	z-index: ${(props) => (props.isDragging ? -1 : 2)};
 	left: 0;
 	top: 0;
 	border: 2px solid #00f;
@@ -42,6 +42,7 @@ export default function ShipC(props) {
 	});
 	return (
 		<StyledShip
+			isDragging={isDragging}
 			ref={drag}
 			onClick={() => {
 				props.onClick(props.ship);

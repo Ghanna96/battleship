@@ -88,24 +88,32 @@ function Gameboard() {
 		}
 	};
 	const canPlaceShip = (s, x, y) => {
-		const { length, vertical } = s;
+		const { length, vertical, id } = s;
 		if (vertical) {
 			let c = x.charCodeAt(0);
 			let box;
+			if (c + length > 75) {
+				return false;
+			}
 			for (let i = 0; i < length; i++) {
 				let char = String.fromCharCode(c);
 				c++;
 				box = getBox(char, y);
-				if (box.ship) {
+
+				if (box.ship && box.ship.id !== id) {
 					return false;
 				}
 			}
+
 			return true;
 		} else {
+			if (y + length > 11) {
+				return false;
+			}
 			for (let i = 0; i < length; i++) {
 				let c = y + i;
 				let box = getBox(x, c);
-				if (box.ship) {
+				if (box.ship && box.ship.id !== id) {
 					return false;
 				}
 			}

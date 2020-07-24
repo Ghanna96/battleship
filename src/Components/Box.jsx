@@ -8,6 +8,7 @@ const StyledDiv = styled.div`
 	height: 32px;
 	width: 32px;
 `;
+
 const SunkShip = styled(StyledDiv)`
 	border-color: red;
 	background: rgba(255, 0, 0, 0.05);
@@ -93,11 +94,23 @@ const StyledTd = styled.td`
 `;
 
 export default function Box(props) {
-	const { player, onHit, onClick, ship, children, moveShip, x, y } = props;
+	const {
+		player,
+		onHit,
+		onClick,
+		ship,
+		children,
+		moveShip,
+		x,
+		y,
+		canPlace,
+	} = props;
 	const [{ isOver }, drop] = useDrop({
 		accept: itemTypes.SHIP,
+		canDrop: (item, monitor) => canPlace(item.ship, x, y),
+
 		drop: (item, monitor) => {
-			console.log(item, x, y);
+			console.log('drop', x, y);
 			moveShip(item.ship, x, y);
 			//what to do when item is drop
 		},
