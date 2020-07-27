@@ -21,7 +21,7 @@ function Gameboard() {
 				arr.push([b.X, b.Y]);
 				return arr;
 			}, []);
-	let defaultShips = [
+	const ships = [
 		Ship(4, 's1', ['A', 4], false),
 		Ship(2, 's2', ['C', 6], true),
 		Ship(4, 's3', ['A', 1], true),
@@ -29,7 +29,6 @@ function Gameboard() {
 		Ship(1, 's5', ['G', 4], false),
 		Ship(2, 's6', ['H', 6], false),
 	];
-	let ships = [];
 
 	const getShips = () => ships;
 	const getIndex = (x, y) =>
@@ -37,9 +36,7 @@ function Gameboard() {
 	const getBattlefield = () => battlefield;
 	const missed = () => missedAttacks;
 	const getBox = (x, y) => battlefield.find((o) => o.X === x && o.Y === y);
-	const addShip = (ship) => {
-		ships.push(ship);
-	};
+
 	//reset the ship prop to null
 	const resetShips = () => {
 		let freshBoard = battlefield.map((cell) => {
@@ -134,16 +131,26 @@ function Gameboard() {
 		return sunk; // === shipCounter ? true : false;
 	};
 	const autoFill = () => {
-		defaultShips.forEach((s) => {
-			addShip(s);
-		});
 		placeShips();
 	};
+	const randomPlacing = () => {
+		let coords = availableMoves();
+		const length = coords.length;
+		ships.forEach((s) => {
+			let index = Math.floor(Math.random() * length);
+			let [x, y] = coords[index];
+			while (!canPlaceShip(s, x, y)) {
+				let index = Math.floor(Math.random() * length);
+				[x, y] = coords[index];
+			}
+			moveShip(s, x, y);
+		});
+	};
 	return {
+		randomPlacing,
 		canPlaceShip,
 		moveShip,
 		availableMoves,
-		addShip,
 		placeShips,
 		getBattlefield,
 		receiveAttack,

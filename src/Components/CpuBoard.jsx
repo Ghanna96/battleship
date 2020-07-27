@@ -35,6 +35,8 @@ export default function CpuBoard(props) {
 	const field = board.getBattlefield();
 
 	const ships = board.getShips();
+
+	console.log(ships);
 	const rows = field
 		.map((b, i) => {
 			const [x, y] = [b.X, b.Y];

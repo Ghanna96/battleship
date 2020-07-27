@@ -76,6 +76,7 @@ class Battleship extends Component {
 		let c = this.state.cBoard;
 		p.autoFill();
 		c.autoFill();
+		c.randomPlacing();
 		this.setState({ pBoard: p });
 		this.setState({ cBoard: c });
 	}
