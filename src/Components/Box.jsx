@@ -112,7 +112,6 @@ export default function Box(props) {
 		drop: (item, monitor) => {
 			console.log('drop', x, y);
 			moveShip(item.ship, x, y);
-			//what to do when item is drop
 		},
 		collect: (monitor) => ({
 			isOver: !!monitor.isOver(),
@@ -165,4 +164,3 @@ export default function Box(props) {
 
 	return <StyledTd>{renderBox()}</StyledTd>;
 }
-// if (player === 'computer')

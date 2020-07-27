@@ -32,7 +32,6 @@ export default function ShipC(props) {
 	const { ship } = props;
 	const [{ isDragging }, drag] = useDrag({
 		item: {
-			//add props to drag with
 			ship,
 
 			type: ItemTypes.SHIP,

@@ -128,7 +128,7 @@ function Gameboard() {
 	const allShipsSunk = () => {
 		const sunk = ships.every((x) => x.isSunk() === true);
 
-		return sunk; // === shipCounter ? true : false;
+		return sunk;
 	};
 	const autoFill = () => {
 		placeShips();

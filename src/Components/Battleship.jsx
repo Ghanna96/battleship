@@ -18,7 +18,9 @@ const Battelfields = styled.div`
 const Header = styled.header`
 	text-align: center;
 `;
-
+const Winner = styled.div`
+	text-align: center;
+`;
 class Battleship extends Component {
 	state = {
 		pBoard: Gameboard(),
@@ -71,7 +73,7 @@ class Battleship extends Component {
 		}, 1000);
 	};
 	componentWillMount() {
-		console.log('use effect');
+		console.log('Mounted');
 		let p = this.state.pBoard;
 		let c = this.state.cBoard;
 		p.autoFill();
@@ -95,9 +97,7 @@ class Battleship extends Component {
 		console.log(board.getBox(x, y));
 		this.setState({ pBoard: board });
 	};
-	canMoveShip = (ship, x, y) => {
-		const board = Object.assign({}, this.state.pBoard);
-	};
+
 	startGame = () => {
 		this.setState({ gameStarted: true });
 		console.log('play');
@@ -110,7 +110,14 @@ class Battleship extends Component {
 			return true;
 		}
 	}
-
+	getWinner() {
+		const boards = [this.state.pBoard, this.state.cBoard];
+		if (boards[0].allShipsSunk()) {
+			return 'Computer won!';
+		} else if (boards[1].allShipsSunk()) {
+			return 'You won!';
+		}
+	}
 	render() {
 		console.log('render');
 		return (
@@ -118,7 +125,7 @@ class Battleship extends Component {
 				<Header>
 					<h1>Battleship</h1>
 				</Header>
-				<Button onClick={this.startGame}>
+				<Button onClick={this.startGame} disabled={this.state.gameStarted}>
 					{!this.state.gameStarted && (
 						<h3> Move your ships and click play to start</h3>
 					)}
@@ -138,38 +145,10 @@ class Battleship extends Component {
 						gameStarted={this.state.gameStarted}
 						gameOver={this.state.gameOver}></CpuBoard>
 				</Battelfields>
+				<Winner>{this.state.gameOver && <h3>{this.getWinner()} </h3>}</Winner>
 			</React.Fragment>
 		);
 	}
 }
 
 export default Battleship;
-
-// export default function Battleship() {
-// 	const [pBoard, setBoard1] = useState(Gameboard()); //player
-// 	const [cBoard, setBoard2] = useState(Gameboard()); //computer
-// 	const player = Player('player');
-// 	const computer = Player('computer');
-
-// 	const attackBoard = (x, y, board) => {
-// 		let bf = Object.assign({}, board);
-// 		player.attack(bf, x, y);
-// 		setBoard2(bf);
-// 		console.log(bf.getBox(x, y));
-// 	};
-// 	useEffect(() => {
-// 		console.log('use effect');
-// 		let p = pBoard;
-// 		let c = cBoard;
-// 		p.autoFill();
-// 		c.autoFill();
-// 		setBoard1(p);
-// 		setBoard2(c);
-// 	}, []);
-// 	// console.log('App');
-// 	return (
-// 		<Battelfields>
-// 			<Board board={pBoard}></Board>
-// 			<CpuBoard board={cBoard} attack={attackBoard}></CpuBoard>
-// 		</Battelfields>
-// 	);

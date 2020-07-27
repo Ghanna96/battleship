@@ -15,6 +15,8 @@ const Play = styled.a`
 	font-weight: bold;
 	padding: 10px 25px;
 	text-decoration: none;
+	pointer-events: ${(props) => (props.disabled ? 'none' : 'initial')};
+	opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 	&:hover {
 		background-color: #59b02e;
 	}
@@ -26,7 +28,9 @@ const Play = styled.a`
 export default function Button(props) {
 	return (
 		<Wrapper>
-			<Play onClick={props.onClick}>Play</Play>
+			<Play onClick={props.onClick} disabled={props.disabled}>
+				Play
+			</Play>
 			{props.children}
 		</Wrapper>
 	);

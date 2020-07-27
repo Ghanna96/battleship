@@ -3,9 +3,6 @@ import styled from 'styled-components';
 import ShipC from './Ship';
 import Marker from './Marker';
 import Box from './Box';
-import { useDrop } from 'react-dnd';
-import itemTypes from '../utils/items';
-import Ship from '../Game/shipFactory';
 
 const StyledDiv = styled.div`
 	position: relative;
