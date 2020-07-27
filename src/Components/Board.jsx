@@ -32,22 +32,11 @@ const Table = styled.table`
 `;
 
 export default function Board(props) {
-	const { board, gameOver, shipClick, moveShip } = props;
+	const { board, gameOver, shipClick, moveShip, gameStarted } = props;
 	// gb.autoFill();
 	const field = board.getBattlefield();
 
 	const ships = board.getShips();
-	// const [{ isOver, x, y }, drop] = useDrop({
-	// 	accept: itemTypes.SHIP,
-	// 	drop: (item, monitor) => {
-	// 		console.log(item, x, y);
-	// 		// moveShip(item,)
-	// 		//what to do when item is drop
-	// 	},
-	// 	collect: (monitor) => ({
-	// 		isOver: !!monitor.isOver(),
-	// 	}),
-	// });
 
 	const renderShip = (x, y) => {
 		let ship = ships.find((s) => s.coords[0] === x && s.coords[1] === y);
@@ -60,6 +49,7 @@ export default function Board(props) {
 					length={ship.length}
 					id={ship.id}
 					vertical={ship.vertical}
+					gameStarted={gameStarted}
 				/>
 			);
 		} else return null;

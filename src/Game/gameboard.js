@@ -21,8 +21,16 @@ function Gameboard() {
 				arr.push([b.X, b.Y]);
 				return arr;
 			}, []);
-
+	let defaultShips = [
+		Ship(4, 's1', ['A', 4], false),
+		Ship(2, 's2', ['C', 6], true),
+		Ship(4, 's3', ['A', 1], true),
+		Ship(1, 's4', ['D', 4], false),
+		Ship(1, 's5', ['G', 4], false),
+		Ship(2, 's6', ['H', 6], false),
+	];
 	let ships = [];
+
 	const getShips = () => ships;
 	const getIndex = (x, y) =>
 		battlefield.findIndex((el) => el.X === x && el.Y === y);
@@ -126,14 +134,7 @@ function Gameboard() {
 		return sunk; // === shipCounter ? true : false;
 	};
 	const autoFill = () => {
-		let newShips = [
-			Ship(4, 's1', ['A', 4], false),
-			Ship(2, 's2', ['C', 6], true),
-			Ship(4, 's3', ['A', 1], true),
-			Ship(1, 's4', ['D', 4], false),
-			Ship(1, 's5', ['G', 4], false),
-		];
-		newShips.forEach((s) => {
+		defaultShips.forEach((s) => {
 			addShip(s);
 		});
 		placeShips();

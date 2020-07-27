@@ -18,13 +18,14 @@ const StyledShip = styled.div`
 	height: ${vertical};
 	padding-right: 1px;
 	padding-bottom: 0px;
-	z-index: ${(props) => (props.isDragging ? -1 : 2)};
+	z-index: ${(props) => (props.isDragging ? -1 : 10)};
 	left: 0;
 	top: 0;
 	border: 2px solid #00f;
 	background: rgba(0, 0, 255, 0.05);
 	position: absolute !important;
 	margin: -2px;
+	visibility: ${(props) => (props.isDragging ? 'hidden' : '')};
 `;
 
 export default function ShipC(props) {
@@ -36,6 +37,7 @@ export default function ShipC(props) {
 
 			type: ItemTypes.SHIP,
 		},
+		canDrag: () => !props.gameStarted,
 		collect: (monitor) => ({
 			isDragging: !!monitor.isDragging(),
 		}),
