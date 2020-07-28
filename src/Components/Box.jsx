@@ -131,10 +131,10 @@ export default function Box(props) {
 					}
 
 					return (
-						<StyledBox>
+						<StyledDiv>
 							<HitShip></HitShip>
 							{children}
-						</StyledBox>
+						</StyledDiv>
 					);
 				} else return <StyledHitBox>{children}</StyledHitBox>; //empty cell
 			} else return <StyledBox onClick={onClick}>{children}</StyledBox>; //standard cell
