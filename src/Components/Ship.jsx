@@ -27,10 +27,16 @@ const StyledShip = styled.div`
 	margin: -2px;
 	visibility: ${(props) => (props.isDragging ? 'hidden' : '')};
 `;
+const Handle = styled.div`
+	position: relative;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+`;
 
 export default function ShipC(props) {
 	const { ship } = props;
-	const [{ isDragging }, drag] = useDrag({
+	const [{ isDragging }, drag, preview] = useDrag({
 		item: {
 			ship,
 
@@ -44,11 +50,13 @@ export default function ShipC(props) {
 	return (
 		<StyledShip
 			isDragging={isDragging}
-			ref={drag}
 			onClick={() => {
 				props.onClick(props.ship);
 			}}
 			length={props.length}
-			vertical={props.vertical}></StyledShip>
+			vertical={props.vertical}
+			ref={preview}>
+			<Handle ref={drag}></Handle>
+		</StyledShip>
 	);
 }
