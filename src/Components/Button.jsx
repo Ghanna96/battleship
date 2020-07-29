@@ -25,12 +25,37 @@ const Play = styled.a`
 		top: 1px;
 	}
 `;
+const Restart = styled.a`
+	background-color: #97e673;
+	border-radius: 15px;
+	display: inline-block;
+	cursor: pointer;
+	color: #ffffff;
+	font-family: Arial;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 10px 25px;
+	text-decoration: none;
+	margin-left: 20px;
+	pointer-events: ${(props) => (!props.disabled ? 'none' : 'initial')};
+	opacity: ${(props) => (!props.disabled ? 0.5 : 1)};
+	&:hover {
+		background-color: #59b02e;
+	}
+	&:active {
+		position: relative;
+		top: 1px;
+	}
+`;
 export default function Button(props) {
 	return (
 		<Wrapper>
-			<Play onClick={props.onClick} disabled={props.disabled}>
+			<Play onClick={props.onStart} disabled={props.disabled}>
 				Play
 			</Play>
+			<Restart onClick={props.restart} disabled={props.disabled}>
+				Restart
+			</Restart>
 			{props.children}
 		</Wrapper>
 	);

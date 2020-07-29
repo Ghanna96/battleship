@@ -23,8 +23,8 @@ const Winner = styled.div`
 `;
 class Battleship extends Component {
 	state = {
-		pBoard: Gameboard(),
-		cBoard: Gameboard(),
+		pBoard: '',
+		cBoard: '',
 		player: Player('player'),
 		computer: Player('computer'),
 		playerTurn: true,
@@ -72,15 +72,20 @@ class Battleship extends Component {
 			}
 		}, 1000);
 	};
-	componentWillMount() {
-		console.log('Mounted');
-		let p = this.state.pBoard;
-		let c = this.state.cBoard;
+	init = () => {
+		let p = Gameboard();
+		let c = Gameboard();
 		p.autoFill();
 		c.autoFill();
 		c.randomPlacing();
 		this.setState({ pBoard: p });
 		this.setState({ cBoard: c });
+		this.setState({ gameStarted: false });
+		this.setState({ gameOver: false });
+	};
+	componentWillMount() {
+		console.log('Mounted');
+		this.init();
 	}
 	shipClick = (s) => {
 		this.setState({ temp: s });
@@ -125,7 +130,10 @@ class Battleship extends Component {
 				<Header>
 					<h1>Battleship</h1>
 				</Header>
-				<Button onClick={this.startGame} disabled={this.state.gameStarted}>
+				<Button
+					onStart={this.startGame}
+					disabled={this.state.gameStarted}
+					restart={this.init}>
 					{!this.state.gameStarted && (
 						<h3> Move your ships and click play to start</h3>
 					)}

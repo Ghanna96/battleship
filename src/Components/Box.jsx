@@ -152,10 +152,10 @@ export default function Box(props) {
 						);
 					}
 					return (
-						<StyledBox>
+						<StyledDiv>
 							<HitShip></HitShip>
 							{children}
-						</StyledBox>
+						</StyledDiv>
 					);
 				} else return <StyledHitBox>{children}</StyledHitBox>; //empty hit cell
 			} else return <StyledDiv ref={drop}>{children}</StyledDiv>; //standard cell
